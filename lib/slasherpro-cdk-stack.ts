@@ -1,35 +1,79 @@
 import * as cdk from 'aws-cdk-lib/core';
 import { Construct } from 'constructs';
-import * as lambda from 'aws-cdk-lib/aws-lambda';
-import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
-import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs'
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import { HandleMatchLambda } from './constructs/handle-match-lambda';
+import { SharedTables } from './constructs/shared-tables';
+import { SharedBucket } from './constructs/shared-buckets';
+import * as dotenv from 'dotenv';
+
+// dotenv.config({ path: '.env.local' });
 
 export class SlasherproCdkStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
+    const resourcePrefix = `${process.env.PJ_PREFIX}-${process.env.ENV}`;
+    // ============================================
+    // IMPORT EXISTING AWS RESOURCES
+    // ============================================
+    // Run: ./scripts/discover-resources.sh
+    // Then: node scripts/generate-imports.js
+    // Copy the generated imports below
 
-    // The code that defines your stack goes here
+    // TODO: Add your imported resources here
+    // Example:
+    // const importedUserTable = dynamodb.Table.fromTableName(
+    //   this,
+    //   'ImportedUserTable',
+    //   'YOUR_TABLE_NAME'
+    // );
 
-    // example resource
-    
-    const userTable = new dynamodb.Table(this, `${process.env.PJ_PREFIX}-${process.env.ENV}-USER`, {
-      partitionKey: { name: "id", type: dynamodb.AttributeType.STRING },
+    // ============================================
+    // NEW RESOURCES (or reference imported ones)
+    // ============================================
+
+    // Change the reosurce name here
+    const userTableName = `${resourcePrefix}-USER`;
+    const jobTableName = `${resourcePrefix}-JOB`;
+    const transactionTableName = `${resourcePrefix}-TRANSACTION`;
+    const matchHistoryTableName = `${resourcePrefix}-MATCH-HISTORY`;
+    const matchTableName = `${resourcePrefix}-MATCH`;
+    const failLogsBucketName = `${resourcePrefix.toLowerCase()}-lambda-fail-logs`;
+    const uploadPrivateBucketName = `${resourcePrefix.toLowerCase()}-upload-private`;
+    const uploadPublicBucketName = `${resourcePrefix.toLowerCase()}-upload-public`;
+    // ============================================
+    // SHARED TABLES
+    // ============================================
+    const sharedTables = new SharedTables(this, `${resourcePrefix}-TABLES`, {
+      userTableName,
+      jobTableName,
+      transactionTableName,
+      matchHistoryTableName,
+      matchTableName,
+      enableMatchTableStream: true, // Enable stream for Lambda trigger
     });
 
-    const jobTable = new dynamodb.Table(this, `${process.env.PJ_PREFIX}-${process.env.ENV}-JOB`, {
-      partitionKey: { name: "pk", type: dynamodb.AttributeType.STRING },
-      sortKey: { name: "sk", type: dynamodb.AttributeType.STRING },
-      
+    // ============================================
+    // SHARED BUCKETS
+    // ============================================
+    const sharedBuckets = new SharedBucket(this, `${resourcePrefix}-BUCKETS`, {
+      logBucketName: failLogsBucketName,
+      uploadPrivateBucketName: uploadPrivateBucketName,
+      uploadPublicBucketName: uploadPublicBucketName,
     });
-    // Create Seat Function
-    const fn = new NodejsFunction(this, 'lambda', {
-      entry: 'lambda/create-seat.ts',
-      handler: 'handler',
-      runtime: lambda.Runtime.NODEJS_22_X,
-    })
-    // const queue = new sqs.Queue(this, 'SlasherproCdkQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
+
+    // ============================================
+    // HANDLE-MATCH LAMBDA CHAIN
+    // ============================================
+    // Includes: Lambda function, DynamoDB stream trigger, S3 failure logs
+    const handleMatchLambda = new HandleMatchLambda(this, `${resourcePrefix}-HANDLE-MATCH-LAMBDA`, {
+      userTable: sharedTables.userTable,
+      jobTable: sharedTables.jobTable,
+      transactionTable: sharedTables.transactionTable,
+      matchHistoryTable: sharedTables.matchHistoryTable,
+      matchTable: sharedTables.matchTable,
+      failLogBucket: sharedBuckets.logBucket,
+    });
+
+    cdk.Tags.of(this).add('project', process.env.PJ_PREFIX || "undefined");
+    cdk.Tags.of(this).add('env', process.env.ENV || "undefined");
   }
 }

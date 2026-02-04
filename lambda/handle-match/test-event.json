@@ -1,0 +1,114 @@
+{
+    "Records": [
+        {
+            "eventID": "test-event-insert",
+            "eventName": "INSERT",
+            "eventVersion": "1.0",
+            "eventSource": "aws:dynamodb",
+            "awsRegion": "us-east-1",
+            "dynamodb": {
+                "ApproximateCreationDateTime": 1704067200,
+                "Keys": {
+                    "pk": {
+                        "S": "MATCH#test-match-123"
+                    },
+                    "sk": {
+                        "S": "USER#test-user-456"
+                    }
+                },
+                "NewImage": {
+                    "pk": {
+                        "S": "MATCH#test-match-123"
+                    },
+                    "sk": {
+                        "S": "USER#test-user-456"
+                    },
+                    "userId": {
+                        "S": "test-user-456"
+                    },
+                    "jobId": {
+                        "S": "test-job-789"
+                    },
+                    "status": {
+                        "S": "ACTIVE"
+                    },
+                    "createdAt": {
+                        "S": "2024-01-01T00:00:00.000Z"
+                    },
+                    "updatedAt": {
+                        "S": "2024-01-01T00:00:00.000Z"
+                    }
+                },
+                "StreamViewType": "NEW_AND_OLD_IMAGES",
+                "SequenceNumber": "111",
+                "SizeBytes": 200
+            },
+            "eventSourceARN": "arn:aws:dynamodb:us-east-1:123456789012:table/SP-dev-Match/stream/2024-01-01T00:00:00.000"
+        },
+        {
+            "eventID": "test-event-modify",
+            "eventName": "MODIFY",
+            "eventVersion": "1.0",
+            "eventSource": "aws:dynamodb",
+            "awsRegion": "us-east-1",
+            "dynamodb": {
+                "ApproximateCreationDateTime": 1704067200,
+                "Keys": {
+                    "pk": {
+                        "S": "MATCH#test-match-456"
+                    },
+                    "sk": {
+                        "S": "USER#test-user-789"
+                    }
+                },
+                "OldImage": {
+                    "pk": {
+                        "S": "MATCH#test-match-456"
+                    },
+                    "sk": {
+                        "S": "USER#test-user-789"
+                    },
+                    "userId": {
+                        "S": "test-user-789"
+                    },
+                    "jobId": {
+                        "S": "test-job-123"
+                    },
+                    "status": {
+                        "S": "ACTIVE"
+                    },
+                    "createdAt": {
+                        "S": "2024-01-01T00:00:00.000Z"
+                    }
+                },
+                "NewImage": {
+                    "pk": {
+                        "S": "MATCH#test-match-456"
+                    },
+                    "sk": {
+                        "S": "USER#test-user-789"
+                    },
+                    "userId": {
+                        "S": "test-user-789"
+                    },
+                    "jobId": {
+                        "S": "test-job-123"
+                    },
+                    "status": {
+                        "S": "COMPLETED"
+                    },
+                    "createdAt": {
+                        "S": "2024-01-01T00:00:00.000Z"
+                    },
+                    "updatedAt": {
+                        "S": "2024-01-01T00:00:00.000Z"
+                    }
+                },
+                "StreamViewType": "NEW_AND_OLD_IMAGES",
+                "SequenceNumber": "222",
+                "SizeBytes": 300
+            },
+            "eventSourceARN": "arn:aws:dynamodb:us-east-1:123456789012:table/SP-dev-Match/stream/2024-01-01T00:00:00.000"
+        }
+    ]
+}

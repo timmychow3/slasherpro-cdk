@@ -3,7 +3,7 @@ import * as cdk from 'aws-cdk-lib/core';
 import { SlasherproCdkStack } from '../lib/slasherpro-cdk-stack';
 
 const app = new cdk.App();
-new SlasherproCdkStack(app, `SP-${process.env.E}-STACK`, {
+new SlasherproCdkStack(app, `SP-${process.env.ENV}-STACK`, {
   /* If you don't specify 'env', this stack will be environment-agnostic.
    * Account/Region-dependent features and context lookups will not work,
    * but a single synthesized template can be deployed anywhere. */
@@ -18,5 +18,5 @@ new SlasherproCdkStack(app, `SP-${process.env.E}-STACK`, {
 
   /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
 
- 
+
 })

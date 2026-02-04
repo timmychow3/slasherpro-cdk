@@ -8,19 +8,40 @@
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
-    "cdk": "cdk"
+    "cdk": "cdk",
+    "discover": "./scripts/discover-resources.sh",
+    "generate-imports": "node scripts/generate-imports.js",
+    "synth:dev": "PJ_PREFIX=SP ENV=DEV cdk synth",
+    "deploy:dev": "PJ_PREFIX=SP ENV=DEV cdk deploy",
+    "diff:dev": "PJ_PREFIX=SP ENV=DEV cdk diff",
+    "synth:prod": "PJ_PREFIX=SP ENV=PROD cdk synth",
+    "deploy:prod": "PJ_PREFIX=SP ENV=PROD cdk deploy",
+    "diff:prod": "PJ_PREFIX=SP ENV=PROD cdk diff",
+    "diff:uat": "PJ_PREFIX=SP ENV=UAT cdk diff",
+    "synth:uat": "PJ_PREFIX=SP ENV=UAT cdk synth",
+    "deploy:uat": "PJ_PREFIX=SP ENV=UAT cdk deploy",
+    "bootstrap:dev": "PJ_PREFIX=SP ENV=DEV cdk bootstrap",
+    "bootstrap:prod": "PJ_PREFIX=SP ENV=PROD cdk bootstrap",
+    "bootstrap:uat": "PJ_PREFIX=SP ENV=UAT cdk bootstrap"
   },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.160",
     "@types/jest": "^30",
     "@types/node": "^24.10.1",
+    "aws-cdk": "2.1103.0",
+    "dotenv": "^17.2.3",
+    "esbuild": "^0.27.2",
     "jest": "^30",
     "ts-jest": "^29",
-    "aws-cdk": "2.1103.0",
     "ts-node": "^10.9.2",
     "typescript": "~5.9.3"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.981.0",
+    "@aws-sdk/lib-dynamodb": "^3.981.0",
+    "@aws-sdk/util-dynamodb": "^3.981.0",
     "aws-cdk-lib": "^2.235.1",
-    "constructs": "^10.0.0"
+    "constructs": "^10.0.0",
+    "hono": "^4.11.7"
   }
 }
