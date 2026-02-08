@@ -30,6 +30,9 @@ export class SharedBucket extends Construct {
         this.uploadPublicBucket = new s3.Bucket(this, `UPLOAD-PUBLIC-BUCKET`, {
             removalPolicy: cdk.RemovalPolicy.RETAIN_ON_UPDATE_OR_DELETE,
             bucketName: props.uploadPublicBucketName,
+            blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+            // blockPublicAccess: s3.BlockPublicAccess.NONE,
+            // publicReadAccess: true,
         });
     }
 }

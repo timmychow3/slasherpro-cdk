@@ -1,0 +1,46 @@
+{
+    "Records": [
+        {
+            "eventID": "604f459f61756149cd929d7eb7c575db",
+            "eventName": "INSERT",
+            "eventVersion": "1.1",
+            "eventSource": "aws:dynamodb",
+            "awsRegion": "ap-east-1",
+            "dynamodb": {
+                "ApproximateCreationDateTime": 1770192651,
+                "Keys": {
+                    "sk": {
+                        "S": "MATCH#JOB#BD#0"
+                    },
+                    "pk": {
+                        "S": "MATCH#JOB#BD"
+                    }
+                },
+                "NewImage": {
+                    "match_count": {
+                        "N": "0"
+                    },
+                    "slasher_confirmation": {
+                        "BOOL": false
+                    },
+                    "client_confirmation": {
+                        "BOOL": false
+                    },
+                    "sk": {
+                        "S": "MATCH#JOB#BD#0"
+                    },
+                    "pk": {
+                        "S": "MATCH#JOB#BD"
+                    },
+                    "status": {
+                        "S": "U"
+                    }
+                },
+                "SequenceNumber": "4796500001694297388095318",
+                "SizeBytes": 120,
+                "StreamViewType": "NEW_AND_OLD_IMAGES"
+            },
+            "eventSourceARN": "arn:aws:dynamodb:ap-east-1:189023280291:table/SP-DEV-MATCH/stream/2026-02-03T07:34:12.280"
+        }
+    ]
+}

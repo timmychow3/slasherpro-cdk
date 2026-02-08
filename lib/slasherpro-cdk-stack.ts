@@ -4,6 +4,7 @@ import { HandleMatchLambda } from './constructs/handle-match-lambda';
 import { SharedTables } from './constructs/shared-tables';
 import { SharedBucket } from './constructs/shared-buckets';
 import * as dotenv from 'dotenv';
+import { MatchQueue } from './constructs/invoke-ai-match';
 
 // dotenv.config({ path: '.env.local' });
 
@@ -71,6 +72,16 @@ export class SlasherproCdkStack extends cdk.Stack {
       matchHistoryTable: sharedTables.matchHistoryTable,
       matchTable: sharedTables.matchTable,
       failLogBucket: sharedBuckets.logBucket,
+    });
+
+
+    // ============================================
+    // MATCH QUEUE
+    // ============================================
+    const matchQueue = new MatchQueue(this, `${resourcePrefix}-MATCH-QUEUE`, {
+      requestQueueName: `${resourcePrefix}-MATCH-REQUEST-QUEUE.fifo`,
+      lambdaFunctionName: `${resourcePrefix}-SQS-INVOKE-MATCH-AI-LAMBDA`,
+      jobTable: sharedTables.jobTable,
     });
 
     cdk.Tags.of(this).add('project', process.env.PJ_PREFIX || "undefined");

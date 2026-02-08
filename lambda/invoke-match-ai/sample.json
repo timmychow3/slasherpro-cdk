@@ -1,0 +1,23 @@
+{
+    "Records": [
+        {
+            "messageId": "ba52ab48-59a2-4ac3-ab53-86e704125171",
+            "receiptHandle": "AQICLW0bPLpfGiZDi+zdB5PEGh7aiAzyeOP/yF/tMnL15+E8nUPRKybSVCPzIbS5NvNYar+XmaZNm00+bZvKUQqusRO1/JZlheTE/J8sm4eTz8nmevTtCX36nYFfdA/qu41/cz54t+nCMP05sIRjU0LVgQpVsqWpePXn9v8QSWW1rXti0TXaefmgs/QJMevVTZExDejhvGm4hBY/5mJELFCq5KDF60WN6k2eDVQs8wDUP/jKsAfsM28deFI0rvvGNdzbw3H7LOIQOp8swSUrq5uVIWAoH4Nj0RPpmnEZD1ISPcw=",
+            "body": "{\n\"job_id\":\"JOB#BD#2\"\n}",
+            "attributes": {
+                "ApproximateReceiveCount": "1",
+                "SentTimestamp": "1770560092898",
+                "SequenceNumber": "18900007457491439616",
+                "MessageGroupId": "JOB",
+                "SenderId": "AIDASYAVKLSR6MVE3DPMG",
+                "MessageDeduplicationId": "JOB#BD#2",
+                "ApproximateFirstReceiveTimestamp": "1770560092898"
+            },
+            "messageAttributes": {},
+            "md5OfBody": "ba8bd51c729b732d188eccf027ace5ab",
+            "eventSource": "aws:sqs",
+            "eventSourceARN": "arn:aws:sqs:ap-east-1:189023280291:SP-DEV-MATCH-REQUEST-QUEUE.fifo",
+            "awsRegion": "ap-east-1"
+        }
+    ]
+}
